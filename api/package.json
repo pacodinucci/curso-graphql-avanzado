@@ -9,9 +9,11 @@
     "dev": "yarn start"
   },
   "dependencies": {
+    "@prisma/client": "^5.5.2",
     "apollo-server": "^3.3.0",
     "graphql": "^15.6.0",
     "nodemon": "^2.0.13",
+    "prisma": "^5.5.2",
     "ts-node": "^10.2.1"
   }
 }
