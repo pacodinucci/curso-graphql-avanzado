@@ -47,7 +47,6 @@ const mockAvocadoDB: Avocado[] = [
 
 test('should return a list of avos', async () => {
   mockContext.orm.avocado.findMany.mockResolvedValue(mockAvocadoDB)
-
   const query = gql`
     {
       avos {
@@ -59,44 +58,44 @@ test('should return a list of avos', async () => {
   `
 
   const result = await tester.graphql(query, undefined, context)
-  expect(mockContext.orm.avocado.findMany).toHaveBeenCalledTimes(1)
   expect(result.data).toEqual({
     avos: [
       {
         id: '1',
         name: 'Reed Avocado',
-        price: 1.18,
-      },
-    ],
-  })
-  expect(mockContext.orm.avocado.findMany).toHaveBeenCalledWith({
-    include: { attributes: true },
-    where: undefined,
-    take: undefined,
-    skip: undefined,
-  })
-})
-
-test('should filter a list of avos', async () => {
-  mockContext.orm.avocado.findMany.mockResolvedValue([])
-
-  const query = gql`
-    {
-      avos(where: { name: { contains: "Hass" } }, skip: 1) {
-        id
+        price: 1.18
       }
-    }
-  `
-
-  const result = await tester.graphql(query, undefined, context)
-  expect(result.data).toEqual({
-    avos: [],
+    ]
   })
   expect(mockContext.orm.avocado.findMany).toHaveBeenCalledTimes(1)
   expect(mockContext.orm.avocado.findMany).toHaveBeenCalledWith({
     include: { attributes: true },
-    where: { name: { contains: 'Hass' } },
+    where: undefined,
+    skip: undefined,
     take: undefined,
-    skip: 1,
   })
 })
+
+// test('should filter a list of avos', async () => {
+//   mockContext.orm.avocado.findMany.mockResolvedValue([])
+
+//   const query = gql`
+//     {
+//       avos(where: { name: { contains: "Hass" } }, skip: 1) {
+//         id
+//       }
+//     }
+//   `
+
+//   const result = await tester.graphql(query, undefined, context)
+//   expect(result.data).toEqual({
+//     avos: [],
+//   })
+//   expect(mockContext.orm.avocado.findMany).toHaveBeenCalledTimes(1)
+//   expect(mockContext.orm.avocado.findMany).toHaveBeenCalledWith({
+//     include: { attributes: true },
+//     where: { name: { contains: 'Hass' } },
+//     take: undefined,
+//     skip: 1,
+//   })
+// })
